@@ -1,9 +1,13 @@
+import 'package:advicely/data/model.dart';
 import 'package:advicely/widgets/copie_button.dart';
 import 'package:advicely/widgets/generer_button.dart';
 import 'package:advicely/widgets/panneau_central.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:advicely/data/datasource.dart' as datasource;
 
 class ConseilPage extends StatefulWidget {
   @override
@@ -13,6 +17,7 @@ class ConseilPage extends StatefulWidget {
 class _ConseilPageState extends State<ConseilPage> {
   @override
   Widget build(BuildContext context) {
+    final panneauCentral = PanneauCentral(future: datasource.genererConseil());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF5A7D75),
@@ -48,13 +53,25 @@ class _ConseilPageState extends State<ConseilPage> {
                 ),
               ),
               SizedBox(height: 30),
-              PanneauCentral(texte: "conseil"),
+              panneauCentral,
               SizedBox(height: 30),
               Row(
                 children: [
-                  Expanded(child: GenererButton(onPressed: () {})),
+                  Expanded(
+                    child: GenererButton(
+                      onPressed: () {
+                        setState(() {}); //actualise la page
+                      },
+                    ),
+                  ),
                   SizedBox(width: 30),
-                  CopieButton(onPressed: () {}),
+                  CopieButton(
+                    onPressed: () async {
+                      try {
+                        await FlutterClipboard.copy(panneauCentral.texte);
+                      } on ClipboardException catch (e) {}
+                    },
+                  ),
                 ],
               ),
             ],
