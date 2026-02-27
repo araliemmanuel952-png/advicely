@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:advicely/data/model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 /// génère un conseil et retourne le texte traduit en français
 Future<Conseil> genererConseil() async {
   final client = http.Client();
   final uri = "https://api.api-ninjas.com/v1/advice";
-  final cle = "P9TmH05eSq8WO4ZACeGWn0RFuEVQ3QzNCfjbQCnn";
+  final cle = "";
   final reponse = await client.get(Uri.parse(uri), headers: {"X-Api-Key": cle});
   final json =
       jsonDecode(utf8.decode(reponse.bodyBytes))

@@ -53,7 +53,7 @@ class _ConseilPageState extends State<ConseilPage> {
                 ),
               ),
               SizedBox(height: 30),
-              panneauCentral,
+              SingleChildScrollView(child: panneauCentral),
               SizedBox(height: 30),
               Row(
                 children: [
